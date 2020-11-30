@@ -1,11 +1,13 @@
-import { createStore } from "redux";
-import { appReducer } from "./ducks";
+import { createStore, applyMiddleware } from "redux";
+import { appReducer,rootSaga } from "./ducks";
+import { sagaMiddleware } from "./middleware";
 
 export default function configureStore(initialState) {
   const store = createStore(
     appReducer,
     initialState,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    applyMiddleware(sagaMiddleware)
   );
+  sagaMiddleware.run(rootSaga)
   return store;
 }

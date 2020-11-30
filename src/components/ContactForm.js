@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-// import { useSelector, useDispatch } from "react-redux";
-// import { saveCountries } from "store/ducks/home/actions";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchAllCountries } from "store/ducks/home/actions";
 
 const data = ["Select 1", "Select 2", "Select 3", "Select 4"];
 
-const ContactForm = (props) => {
+const ContactForm = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -12,17 +12,17 @@ const ContactForm = (props) => {
     select: data[0],
     message: "",
   });
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const countries = useSelector(({ home }) => home.countries);
 
-  // useEffect(() => {
-  //   fetch("https://restcountries.eu/rest/v2/all")
-  //     .then((res) => res.json())
-  //     .then((res) => dispatch(saveCountries(res)))
-  //     .catch((err) => console.log(err));
-  //   // eslint-disable-next-line
-  // }, []);
+  useEffect(() => {
+    dispatch(fetchAllCountries());
+    // eslint-disable-next-line
+  }, []);
 
-  // useEffect(() => {}, [countries]);
+  useEffect(() => {
+    // console.log(countries);
+  }, [countries]);
 
   const handleChange = ({ target }) => {
     const { value, name } = target;
