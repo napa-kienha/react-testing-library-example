@@ -1,7 +1,6 @@
-import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "App";
-
+import { render, screen } from "./test-utils";
 import { ReduxWrapper } from "./setupTests";
 
 describe("test App.js", () => {
@@ -32,6 +31,22 @@ describe("test App.js", () => {
     userEvent.type(fields.emailInput, data.email);
     userEvent.type(fields.passwordInput, data.password);
     userEvent.click(fields.loginBtn);
+    expect(screen.getByLabelText("contact-form")).toBeInTheDocument();
+  });
+});
+
+describe("test login redux", () => {
+  let data;
+  beforeEach(() => {
+    data = {
+      email: "admin@test.net",
+      password: "123",
+    };
+  });
+  it("test dispatch login form", () => {
+    render(<App />, {
+      initialState: { home: { inforUser: data } },
+    });
     expect(screen.getByLabelText("contact-form")).toBeInTheDocument();
   });
 });

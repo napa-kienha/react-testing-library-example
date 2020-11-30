@@ -10,6 +10,6 @@ import { Provider } from "react-redux";
 const initialState = window.initialReduxState;
 const store = configureStore(initialState);
 
-export const ReduxWrapper = ({ children }) => {
-  return <Provider store={store}>{children}</Provider>;
+export const ReduxWrapper = ({ children, initStore = store }) => {
+  return <Provider store={initStore}>{children}</Provider>;
 };

@@ -1,22 +1,15 @@
-import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { saveInforUser } from "store/ducks/home/actions";
+import { useLoginForm } from "./loginHooks";
 
 const Login = ({ handleChangeInput }) => {
   const dispatch = useDispatch();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-  const [error, setError] = useState({
-    email: false,
-    password: false,
-  });
+  const { formData, formError, changeData, showError } = useLoginForm();
 
   const handleChange = ({ target }) => {
     const { value, name } = target;
-    handleChangeInput && handleChangeInput();
-    setFormData({ ...formData, [name]: value });
+    changeData({ ...formData, [name]: value });
+    handleChangeInput && handleChangeInput({ ...formData, [name]: value });
   };
 
   const submit = (e) => {
@@ -28,7 +21,7 @@ const Login = ({ handleChangeInput }) => {
     errorState.email = !formData.email.trim().includes("admin@test.net");
     errorState.password = !formData.password.trim().includes("123");
     if (errorState.email || errorState.password) {
-      setError(errorState);
+      showError(errorState);
       return;
     }
     dispatch(saveInforUser(formData));
@@ -46,7 +39,7 @@ const Login = ({ handleChangeInput }) => {
             type="email"
             className="form-control"
           />
-          {error.email && (
+          {formError.email && (
             <span aria-label="login-email-error">Account is not existed!</span>
           )}
         </div>
@@ -59,7 +52,7 @@ const Login = ({ handleChangeInput }) => {
             type="password"
             className="form-control"
           />
-          {error.password && (
+          {formError.password && (
             <span aria-label="login-password-error">Password is wrong!</span>
           )}
         </div>
