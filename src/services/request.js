@@ -1,6 +1,14 @@
+import axios from "axios";
+
 class Request {
   async fetchData(url) {
-    return await fetch(url).then((res) => res.json());
+    let data;
+    try {
+      data = await axios.get(url);
+    } catch (e) {
+      console.log(e);
+    }
+    return data;
   }
 }
 

@@ -5,12 +5,12 @@ import Request from "services/request";
 
 const request = new Request();
 
-function* fetchData() {
+export function* fetchData() {
   try {
     const url = "https://restcountries.eu/rest/v2/all";
     const res = yield call(request.fetchData, url);
     if (res) {
-      yield put(saveCountries(res));
+      yield put(saveCountries(res.data));
     }
   } catch (e) {
     console.log(e);

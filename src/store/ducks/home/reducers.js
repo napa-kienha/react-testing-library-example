@@ -2,7 +2,7 @@ import homeTypes from "./types";
 
 const initialState = {
   countries: [],
-  inforUser: {},
+  inforUser: { email: "admin@test.net", password: "123" },
 };
 
 const homeReducer = (state = initialState, action) => {
